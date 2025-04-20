@@ -1,5 +1,6 @@
 const myLibrary = [];
 
+const newBookButton = document.querySelector("#new-book-btn");
 const newBookForm = document.querySelector("#new-book-form");
 
 const libraryContainer = document.querySelector(".library-container");
@@ -55,3 +56,6 @@ newBookForm.addEventListener('submit', (e) => {
   newBookForm.setAttribute('style', "display: none;");
 });
 
+newBookButton.addEventListener("click", () => {
+  newBookForm.style.display = "block";
+});
