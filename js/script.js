@@ -15,7 +15,7 @@ function Book(id, title, author) {
 
 function addBookToTheLibrary(title, author) {
   const book = new Book(crypto.randomUUID(), title, author);
-  console.log(`${book.title} ${book.author}`);
+  myLibrary.push(book);
 }
 
 addBookBtn.addEventListener("click", () => {
