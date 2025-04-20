@@ -4,10 +4,7 @@ const newBookForm = document.querySelector("#new-book-form");
 
 const libraryContainer = document.querySelector(".library-container");
 
-const bookDisplay = document.createElement('div');
-
-bookDisplay.classList.add('book');
-
+const bookTemplate = document.querySelector("#book-template");
 
 function Book(id, title, author, pages, read) {
   if (!new.target) {
@@ -27,8 +24,20 @@ function addBookToTheLibrary(title, author, pages, read) {
 }
 
 function displayBook(book) {
-  const newBook = bookDisplay.cloneNode(true);
-  newBook.textContent = `${book.title} by ${book.author}, ${book.pages} pages, ${book.read}`;
+  const newBook = bookTemplate.cloneNode(true);
+  
+  newBook.querySelector(".book-title").textContent = book.title;
+  newBook.querySelector(".book-author").textContent = book.author;
+  newBook.querySelector(".book-pages").textContent = `pages: ${book.pages}`;
+  
+  if (book.read) {
+    newBook.querySelector(".read-status").setAttribute('style', "background-color: green;");
+  } else {
+    newBook.querySelector(".read-status").setAttribute('style', "background-color: red;");
+  }
+
+  newBook.style.display = "grid";
+  //newBook.textContent = `${book.title} by ${book.author}, ${book.pages} pages, ${book.read}`;
   libraryContainer.appendChild(newBook);
 }
 
