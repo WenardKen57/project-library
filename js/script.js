@@ -4,7 +4,6 @@ const newBookButton = document.querySelector("#new-book-btn");
 const newBookForm = document.querySelector("#new-book-form");
 
 const libraryContainer = document.querySelector(".library-container");
-
 const bookTemplate = document.querySelector("#book-template");
 
 function Book(id, title, author, pages, read) {
@@ -26,15 +25,37 @@ function addBookToTheLibrary(title, author, pages, read) {
 
 function displayBook(book) {
   const newBook = bookTemplate.cloneNode(true);
+
+  newBook.addEventListener('click', (e) => {
+    let target = e.target;
+    
+    switch(target.className) {
+      case 'remove-btn':
+        target.parentElement.remove();
+        break;
+      case 'read-status':
+        if (target.textContent === "Read") {
+          target.style.backgroundColor = "red";
+          target.textContent = "Unread";
+        } else {
+          target.style.backgroundColor = "green";
+          target.textContent = "Read";
+        }
+        break;
+      default:
+        break;
+    }
+  });
   
   newBook.querySelector(".book-title").textContent = book.title;
-  newBook.querySelector(".book-author").textContent = book.author;
+  newBook.querySelector(".book-author").textContent = `by ${book.author}`;
   newBook.querySelector(".book-pages").textContent = `pages: ${book.pages}`;
+  newBook.querySelector(".read-status").textContent = (book.read) ? "Unread" : "Read";
   
   if (book.read) {
-    newBook.querySelector(".read-status").setAttribute('style', "background-color: green;");
-  } else {
     newBook.querySelector(".read-status").setAttribute('style', "background-color: red;");
+  } else {
+    newBook.querySelector(".read-status").setAttribute('style', "background-color: green;");
   }
 
   newBook.style.display = "grid";
