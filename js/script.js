@@ -17,6 +17,10 @@ function Book(id, title, author, pages, read) {
   this.read = read;
 }
 
+Book.prototype.toggleRead = function() {
+  this.read = !this.read;
+}
+
 function addBookToTheLibrary(title, author, pages, read) {
   const book = new Book(crypto.randomUUID(), title, author, pages, read);
   myLibrary.push(book);
@@ -34,10 +38,12 @@ function displayBook(book) {
         target.parentElement.remove();
         break;
       case 'read-status':
-        if (target.textContent === "Read") {
+        if (book.read) {
+          book.toggleRead();
           target.style.backgroundColor = "red";
           target.textContent = "Unread";
         } else {
+          book.toggleRead();
           target.style.backgroundColor = "green";
           target.textContent = "Read";
         }
@@ -65,13 +71,15 @@ function displayBook(book) {
 
 newBookForm.addEventListener('submit', (e) => {
   e.preventDefault(); // No reloads
-
-  displayBook(addBookToTheLibrary(
+  
+  const book = addBookToTheLibrary(
     newBookForm.elements['title'].value,
     newBookForm.elements['author'].value,
     newBookForm.elements['pages'].value,
     newBookForm.elements['read'].checked
-  ));
+  );
+
+  displayBook(book);
   
   // hide form
   newBookForm.setAttribute('style', "display: none;");
