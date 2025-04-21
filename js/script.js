@@ -27,6 +27,14 @@ function addBookToTheLibrary(title, author, pages, read) {
   return book;
 }
 
+function removeBookFromLibrary(bookIdToRemove) {
+  for (let i = 0; i < myLibrary.length; i++) {
+    if (myLibrary[i].id === bookIdToRemove) {
+      myLibrary.splice(i, 1);
+    }
+  }
+}
+
 function displayBook(book) {
   const newBook = bookTemplate.cloneNode(true);
 
@@ -36,6 +44,7 @@ function displayBook(book) {
     switch(target.className) {
       case 'remove-btn':
         target.parentElement.remove();
+        removeBookFromLibrary(book.id);
         break;
       case 'read-status':
         console.log(target.parentElement.getAttribute("data-book-id"));
@@ -53,6 +62,7 @@ function displayBook(book) {
         break;
     }
   });
+  
   newBook.setAttribute('data-book-id', book.id);
   newBook.querySelector(".book-title").textContent = book.title;
   newBook.querySelector(".book-author").textContent = `by ${book.author}`;
