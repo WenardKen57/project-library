@@ -9,7 +9,6 @@ html {
   font-family: var(--general-font-family);
 }
 
-#new-book-form,
 #book-template {
   display: none;
 }

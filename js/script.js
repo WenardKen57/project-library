@@ -2,6 +2,7 @@ const myLibrary = [];
 
 const newBookButton = document.querySelector("#new-book-btn");
 const newBookForm = document.querySelector("#new-book-form");
+const libraryDialog = document.querySelector("#library-dialog");
 
 const libraryContainer = document.querySelector(".library-container");
 const bookTemplate = document.querySelector("#book-template");
@@ -91,13 +92,11 @@ newBookForm.addEventListener('submit', (e) => {
   );
 
   displayBook(book);
-  
-  // hide form
-  newBookForm.setAttribute('style', "display: none;");
 
+  libraryDialog.close();
   newBookForm.reset();
 });
 
 newBookButton.addEventListener("click", () => {
-  newBookForm.style.display = "block";
+  libraryDialog.showModal();
 });
