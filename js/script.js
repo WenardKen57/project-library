@@ -39,31 +39,6 @@ function removeBookFromLibrary(bookIdToRemove) {
 function displayBook(book) {
   const newBook = bookTemplate.cloneNode(true);
 
-  newBook.addEventListener('click', (e) => {
-    let target = e.target;
-
-    switch(target.className) {
-      case 'remove-btn':
-        target.parentElement.remove();
-        removeBookFromLibrary(book.id);
-        break;
-      case 'read-status':
-        console.log(target.parentElement.getAttribute("data-book-id"));
-        if (book.read) {
-          book.toggleRead();
-          target.style.backgroundColor = "red";
-          target.textContent = "Unread";
-        } else {
-          book.toggleRead();
-          target.style.backgroundColor = "green";
-          target.textContent = "Read";
-        }
-        break;
-      default:
-        break;
-    }
-  });
-  
   newBook.setAttribute('data-book-id', book.id);
   newBook.querySelector(".book-title").textContent = book.title;
   newBook.querySelector(".book-author").textContent = `by ${book.author}`;
@@ -80,6 +55,33 @@ function displayBook(book) {
   //newBook.textContent = `${book.title} by ${book.author}, ${book.pages} pages, ${book.read}`;
   libraryContainer.appendChild(newBook);
 }
+
+libraryContainer.addEventListener('click', (e) => {
+  let target = e.target;
+
+  switch(target.className) {
+    case 'remove-btn':
+      target.parentElement.remove();
+      removeBookFromLibrary(target.parentElement.dataset.bookId);
+      break;
+    case 'read-status':
+      const bookId = target.parentElement.dataset.bookId;
+      const book = myLibrary.find((b) => b.id === bookId);
+      console.log(bookId);
+      if (book.read) {
+        book.toggleRead();
+        target.style.backgroundColor = "red";
+        target.textContent = "Unread";
+      } else {
+        book.toggleRead();
+        target.style.backgroundColor = "green";
+        target.textContent = "Read";
+      }
+      break;
+    default:
+      break;
+  }
+});
 
 newBookForm.addEventListener('submit', (e) => {
   e.preventDefault(); // No reloads
