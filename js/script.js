@@ -32,12 +32,13 @@ function displayBook(book) {
 
   newBook.addEventListener('click', (e) => {
     let target = e.target;
-    
+
     switch(target.className) {
       case 'remove-btn':
         target.parentElement.remove();
         break;
       case 'read-status':
+        console.log(target.parentElement.getAttribute("data-book-id"));
         if (book.read) {
           book.toggleRead();
           target.style.backgroundColor = "red";
@@ -52,7 +53,7 @@ function displayBook(book) {
         break;
     }
   });
-  
+  newBook.setAttribute('data-book-id', book.id);
   newBook.querySelector(".book-title").textContent = book.title;
   newBook.querySelector(".book-author").textContent = `by ${book.author}`;
   newBook.querySelector(".book-pages").textContent = `pages: ${book.pages}`;
@@ -71,7 +72,7 @@ function displayBook(book) {
 
 newBookForm.addEventListener('submit', (e) => {
   e.preventDefault(); // No reloads
-  
+
   const book = addBookToTheLibrary(
     newBookForm.elements['title'].value,
     newBookForm.elements['author'].value,
