@@ -75,6 +75,8 @@ newBookForm.addEventListener('submit', (e) => {
   
   // hide form
   newBookForm.setAttribute('style', "display: none;");
+
+  newBookForm.reset();
 });
 
 newBookButton.addEventListener("click", () => {
